@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.Scanner;
 
 public class App {
-    public static void main() {
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         //scanner.nextInt();
 
@@ -15,46 +15,34 @@ public class App {
         boneyard.add(new Domino(2, 3));
         boneyard.add(new Domino(3, 4));
 
-        dominoesAreChainable(boneyard, new Chain());
+        try {
+            dominoesAreChainable(new Chain(), boneyard);
+        } catch (Exception e) {
+            System.out.println("Shit was done: ");
+            System.out.println(e.getMessage());
+        }
     }
 
-    private static boolean dominoesAreChainable(LinkedList<Domino> boneyard, Chain chain) {
+    /**
+     *
+     * @param chain sequence of dominoes
+     * @param boneyard all dominoes not in chain
+     *
+     * @return boolean
+     */
+    private static boolean dominoesAreChainable(Chain chain, LinkedList<Domino> boneyard) throws Exception {
         if (boneyard.isEmpty()) {
             return true;
         }
-        // boneyard: D[4,5] A[1,2] B[2,3] C[3,4]
-        // chain: {}
-        // -------------
-        // boneyard: A[1,2] B[2,3] C[3,4]
-        // chain: {D}
 
-        // TODO: move into the foreach
-        Domino domino = boneyard.removeFirst();
-        // boneyard: A[1,2] B[2,3] C[3,4]
-        // aux: D
-        // chain: {}
-        // -------------
-        // boneyard: B[2,3] C[3,4]
-        // aux: A
-        // chain: {D}
-
-        // @TODO: add foreach
-        if (chain.dominoIsAttachable(domino)) {
-            // boneyard: A[1,2] B[2,3] C[3,4]
-            // aux: D
-            // chain: {D}
-            // -------------
-            // boneyard: A[1,2] B[2,3]
-            // aux: C
-            // chain: {C,D}
-
-            dominoesAreChainable(boneyard, chain);
-        } else {
-            boneyard.addLast(domino);
-            return false;
-            //dominoesAreChainable(boneyard, chain);
+        for (Domino domino: boneyard) {
+            if (chain.dominoIsAttachable(domino)) {
+                chain.attachDomino(domino);
+                boneyard.remove(domino);
+                return dominoesAreChainable(chain, boneyard);
+            }
         }
 
-        return true;
+        return false;
     }
 }

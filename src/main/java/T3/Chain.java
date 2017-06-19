@@ -1,5 +1,6 @@
 package T3;
 
+import java.security.InvalidParameterException;
 import java.util.LinkedList;
 
 class Chain {
@@ -21,14 +22,14 @@ class Chain {
         return dominoes.isEmpty() || domino.getLeft() == getHead() || domino.getRight() == getHead();
     }
 
-    public void attachDomino(Domino domino) throws Exception {
+    public void attachDomino(Domino domino) throws InvalidParameterException {
         if (dominoIsAttachableToHead(domino)) {
             attachDominoToHead(domino);
         } else if (dominoIsAttachableToTail(domino)) {
             attachDominoToTail(domino);
+        } else {
+            throw new InvalidParameterException("Error");
         }
-
-        throw new Exception("Error");
     }
 
     public void attachDominoToTail(Domino domino) {
@@ -56,10 +57,18 @@ class Chain {
     }
 
     private int getTail() {
-        return dominoes.getFirst().getLeft();
+        if (! dominoes.isEmpty()) {
+            return dominoes.getFirst().getLeft();
+        }
+
+        return -1;
     }
 
     private int getHead() {
-        return dominoes.getLast().getRight();
+        if (! dominoes.isEmpty()) {
+            return dominoes.getLast().getRight();
+        }
+
+        return -1;
     }
 }

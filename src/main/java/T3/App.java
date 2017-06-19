@@ -1,5 +1,7 @@
 package T3;
 
+import java.security.InvalidParameterException;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -15,12 +17,16 @@ public class App {
         boneyard.add(new Domino(2, 3));
         boneyard.add(new Domino(3, 4));
 
+        boolean out = false;
+
         try {
-            dominoesAreChainable(new Chain(), boneyard);
-        } catch (Exception e) {
+            out = dominoesAreChainable(new Chain(), boneyard);
+        } catch (InvalidParameterException e) {
             System.out.println("Shit was done: ");
             System.out.println(e.getMessage());
         }
+
+        System.out.println("Dominoes are chainable: " + out);
     }
 
     /**
@@ -30,16 +36,23 @@ public class App {
      *
      * @return boolean
      */
-    private static boolean dominoesAreChainable(Chain chain, LinkedList<Domino> boneyard) throws Exception {
+    private static boolean dominoesAreChainable(Chain chain, LinkedList<Domino> boneyard) throws InvalidParameterException {
         if (boneyard.isEmpty()) {
             return true;
         }
+
+        boolean dominoesAreChainable;
 
         for (Domino domino: boneyard) {
             if (chain.dominoIsAttachable(domino)) {
                 chain.attachDomino(domino);
                 boneyard.remove(domino);
-                return dominoesAreChainable(chain, boneyard);
+                dominoesAreChainable = dominoesAreChainable(chain, boneyard);
+                if (dominoesAreChainable) {
+                    return true;
+                }
+
+                // todo: detach dominoes from chain
             }
         }
 

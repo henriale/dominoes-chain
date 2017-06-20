@@ -33,7 +33,7 @@ public class App {
      * @param chain sequence of dominoes
      * @param boneyard all dominoes not in chain
      *
-     * @return boolean informando se È possÌvel encadear todos os dominÛs ou n„o.
+     * @return boolean informando se √© poss√≠vel encadear todos os domin√≥s ou n√£o.
      */
     public static boolean dominoesAreChainable(Chain chain, List<Domino> boneyard) throws InvalidParameterException {
         if(isEmpty(boneyard)) return true;

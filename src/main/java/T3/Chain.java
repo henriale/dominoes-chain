@@ -14,11 +14,11 @@ class Chain {
         return dominoes.isEmpty() || dominoIsAttachableToTail(domino) || dominoIsAttachableToHead(domino);
     }
 
-    private boolean dominoIsAttachableToHead(Domino domino) {
+    private boolean dominoIsAttachableToTail(Domino domino) {
         return dominoes.isEmpty() || domino.getRight() == getTail() || domino.getLeft() == getTail();
     }
 
-    private boolean dominoIsAttachableToTail(Domino domino) {
+    private boolean dominoIsAttachableToHead(Domino domino) {
         return dominoes.isEmpty() || domino.getLeft() == getHead() || domino.getRight() == getHead();
     }
 
@@ -33,7 +33,7 @@ class Chain {
     }
 
     public void attachDominoToTail(Domino domino) {
-        if (domino.getRight() != getTail()) {
+        if (domino.getRight() != getTail() && ! dominoes.isEmpty()) {
             domino.flip();
         }
 
@@ -41,7 +41,7 @@ class Chain {
     }
 
     public void attachDominoToHead(Domino domino) {
-        if (domino.getLeft() != getHead()) {
+        if (domino.getLeft() != getHead() && ! dominoes.isEmpty()) {
             domino.flip();
         }
 
@@ -70,5 +70,9 @@ class Chain {
         }
 
         return -1;
+    }
+
+    public void detachDomino(Domino domino) {
+        dominoes.remove(domino);
     }
 }

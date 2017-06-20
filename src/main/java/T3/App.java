@@ -50,6 +50,9 @@ public class App {
                 dominoesAreChainable = dominoesAreChainable(chain, boneyard);
                 if (dominoesAreChainable) {
                     return true;
+                } else {
+                    chain.detachDomino(domino);
+                    boneyard.addLast(domino);
                 }
 
                 // todo: detach dominoes from chain

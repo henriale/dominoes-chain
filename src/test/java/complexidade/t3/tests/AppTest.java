@@ -23,7 +23,7 @@ public class AppTest {
 	
 	@Before
 	public void prepare() {
-		boneyard = new LinkedList<Domino>();
+		boneyard = new LinkedList<>();
         chain = new Chain();
 	}
 	

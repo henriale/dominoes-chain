@@ -87,6 +87,11 @@ public class Chain {
 
     @Override
     public String toString() {
-    	return dominoes.toString();
+        String response = "";
+        for (Domino domino: dominoes) {
+            response += domino.toString() + " ";
+        }
+
+        return response.trim();
     }
 }

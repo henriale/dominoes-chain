@@ -42,6 +42,6 @@ public class Domino {
     
     @Override
     public String toString() {
-    	return "[" + this.left + ", " + this.right + "]";
+    	return "[" + this.left + " " + this.right + "]";
     }
 }
